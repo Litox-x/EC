@@ -6,11 +6,14 @@
   <meta content="text/html; charset=utf-8" http-equiv=Content-Type>
   <title>Emscripten-Generated Code</title>
   <style>
+      .z{
+          display:flex;
+      }
       fieldset{
           border:none;
       }
       body {
-          color:white;
+          color:black;
           background-image: linear-gradient(to right, #9EEFE1 0%, #4830F0 51%, #9EEFE1 100%);
       }
       form{
@@ -80,7 +83,7 @@
       form {
           margin: 0 auto;
           max-width: 95%;
-          padding: 30px 30px 6px 30px;
+          padding: 15px 50px 6px 15px;
           border: none;
           -moz-border-radius: 5px;
           -webkit-border-radius: 5px;
@@ -88,7 +91,7 @@
           -moz-background-clip: padding;
           -webkit-background-clip: padding-box;
           background-clip: padding-box;
-          background: none;
+          background: white;
           -moz-box-shadow: 0 0 13px 3px rgba(0,0,0,.5);
           -webkit-box-shadow: 0 0 13px 3px rgba(0,0,0,.5);
           box-shadow: 0 0 13px 3px rgba(0,0,0,.5);
@@ -99,7 +102,7 @@
           background: rgba(255, 255, 255, 0.4);
           width: 100%;
           height: 110px;
-          border: none;
+          border: 2px solid black;
           -moz-border-radius: 4px;
           -webkit-border-radius: 4px;
           border-radius: 4px;
@@ -120,7 +123,7 @@
       /* Поля ввода */
       input {
           height: 48px;
-          border: 1px solid rgba(255,255,255,.4);
+          border: 2px solid black;
           -moz-border-radius: 4px;
           -webkit-border-radius: 4px;
           border-radius: 4px;
@@ -219,8 +222,7 @@
     #main-container {
       display: flex;
       flex-direction: column;
-      width: 800px;
-      margin: 0 auto
+      width: 1000px;
     }
     
     #main-container input:not(.radio) {
@@ -244,106 +246,124 @@
 </head>
 
 <body>
-  <figure id=spinner style=overflow:visible>
-    <div class=spinner></div>
-    <center style=margin-top:.5em><strong>WEBASM</strong></center>
-  </figure>
-  <div class=emscripten id=status>LOADING WEBASM...</div>
-  <div class=emscripten>
-    <progress hidden id=progress max=100 value=0></progress>
-  </div>
-  <div id=main-container>
-    <form id=form>
-      <fieldset style="">
-        <legend>Система</legend>
-        <div class=radio-row>
-          <input id=dec name=numsys class=radio type=radio value=dec checked>
-          <label class=radio for=dec>DEC</label>
+    <figure id=spinner style=overflow:visible>
+        <div class=spinner></div>
+        <center style=margin-top:.5em><strong>WEBASM</strong></center>
+    </figure>
+    <div class=emscripten id=status>LOADING WEBASM...</div>
+    <div class=emscripten>
+        <progress hidden id=progress max=100 value=0></progress>
+    </div>
+    <div class="z">
+        <div id=main-container>
+            <form id=form>
+                <fieldset style="">
+                    <legend>Система</legend>
+                    <div class=radio-row>
+                        <input id=dec name=numsys class=radio type=radio value=dec checked>
+                        <label class=radio for=dec>DEC</label>
+                    </div>
+                    <div class=radio-row>
+                        <input id=hex name=numsys class=radio type=radio value=hex>
+                        <label class=radio for=hex>HEX</label>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Параметры ЭК</legend>
+                    <label>
+                        p
+                        <input id=curve-p name=curve-p>
+                    </label>
+                    <label>
+                        a
+                        <input id=curve-a name=curve-a>
+                    </label>
+                    <label>
+                        b
+                        <input id=curve-b name=curve-b>
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <legend>Параметры точки</legend>
+                    <label>
+                        Gx
+                        <input id=curve-gx name=curve-gx>
+                    </label>
+                    <label>
+                        Gy
+                        <input id=curve-gy name=curve-gy>
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <legend>Скаляр</legend>
+                    <label>
+                        d
+                        <input id=curve-d name=curve-d>
+                    </label>
+                </fieldset>
+
+                <div style=margin-top:5px;display:flex;flex-direction:row>
+                    <button id=btn-start-calc style="flex:1 1 100%" type=button>Посчитать</button>
+                    <button id=btn-paste-from-stb style="flex:2 1 150%" type=button>СТБ 34.101.45-2013</button>
+                    <button id=btn-reset style="flex:1 1 100%" type=reset>Отмена</button>
+                </div>
+            </form>
         </div>
-        <div class=radio-row>
-          <input id=hex name=numsys class=radio type=radio value=hex>
-          <label class=radio for=hex>HEX</label>
-        </div>
-      </fieldset>
-      <fieldset>
-        <legend>Параметры ЭК</legend>
-        <label>p
-          <input id=curve-p name=curve-p>
-        </label>
-        <label>a
-          <input id=curve-a name=curve-a>
-        </label>
-        <label>b
-          <input id=curve-b name=curve-b>
-        </label>
-      </fieldset>
-      <fieldset>
-        <legend>Параметры точки</legend>
-        <label>Gx
-          <input id=curve-gx name=curve-gx>
-        </label>
-        <label>Gy
-          <input id=curve-gy name=curve-gy>
-        </label>
-      </fieldset>
-      <fieldset>
-        <legend>Скаляр</legend>
-        <label>d
-          <input id=curve-d name=curve-d>
-        </label>
-      </fieldset>
-      <fieldset>
-        <legend>Результат (d x G)</legend>
-        <label>Время (с)
-          <input id=curve-time name=curve-time disabled>
-        </label>
-        <label>Qx
-          <input id=curve-qx name=curve-qx disabled>
-        </label>
-        <label>Qy
-          <input id=curve-qy name=curve-qy disabled>
-        </label>
-      </fieldset>
-      <div style=margin-top:5px;display:flex;flex-direction:row>
-        <button id=btn-start-calc style="flex:1 1 100%" type=button>Посчитать</button>
-        <button id=btn-paste-from-stb style="flex:2 1 150%" type=button>СТБ 34.101.45-2013</button>
-        <button id=btn-reset style="flex:1 1 100%" type=reset>Отмена</button>
-      </div>
-    </form>
-  </div>
-  <script>
-    var statusElement = document.getElementById("status"),
-      progressElement = document.getElementById("progress"),
-      spinnerElement = document.getElementById("spinner"),
-      Module = {
-        preRun: [],
-        postRun: [],
-        printErr: function(e) {
-          arguments.length > 1 && (e = Array.prototype.slice.call(arguments).join(" ")), console.error(e)
-        },
-        setStatus: function(e) {
-          if (Module.setStatus.last || (Module.setStatus.last = {
-              time: Date.now(),
-              text: ""
-            }), e !== Module.setStatus.last.text) {
-            var t = e.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/),
-              n = Date.now();
-            t && n - Module.setStatus.last.time < 30 || (Module.setStatus.last.time = n, Module.setStatus.last.text = e, t ? (e = t[1], progressElement.value = 100 * parseInt(t[2]), progressElement.max = 100 * parseInt(t[4]), progressElement.hidden = !1, spinnerElement.hidden = !1) : (progressElement.value = null, progressElement.max = null, progressElement.hidden = !0, e || (spinnerElement.hidden = !0)), statusElement.innerHTML = e)
-          }
-        },
-        totalDependencies: 0,
-        monitorRunDependencies: function(e) {
-          this.totalDependencies = Math.max(this.totalDependencies, e), Module.setStatus(e ? "Preparing... (" + (this.totalDependencies - e) + "/" + this.totalDependencies + ")" : "All downloads complete.")
+        <br />
+        <br />
+        <br />
+        <br />
+        <form>
+            <fieldset>
+                <legend>Результат (d x G)</legend>
+                <label>
+                    Время (с)
+                    <input id=curve-time name=curve-time disabled>
+                </label>
+                <label>
+                    Qx
+                    <input id=curve-qx name=curve-qx disabled>
+                </label>
+                <label>
+                    Qy
+                    <input id=curve-qy name=curve-qy disabled>
+                </label>
+            </fieldset>
+        </form>
+    </div>
+    <script>
+        var statusElement = document.getElementById("status"),
+            progressElement = document.getElementById("progress"),
+            spinnerElement = document.getElementById("spinner"),
+            Module = {
+                preRun: [],
+                postRun: [],
+                printErr: function (e) {
+                    arguments.length > 1 && (e = Array.prototype.slice.call(arguments).join(" ")), console.error(e)
+                },
+                setStatus: function (e) {
+                    if (Module.setStatus.last || (Module.setStatus.last = {
+                        time: Date.now(),
+                        text: ""
+                    }), e !== Module.setStatus.last.text) {
+                        var t = e.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/),
+                            n = Date.now();
+                        t && n - Module.setStatus.last.time < 30 || (Module.setStatus.last.time = n, Module.setStatus.last.text = e, t ? (e = t[1], progressElement.value = 100 * parseInt(t[2]), progressElement.max = 100 * parseInt(t[4]), progressElement.hidden = !1, spinnerElement.hidden = !1) : (progressElement.value = null, progressElement.max = null, progressElement.hidden = !0, e || (spinnerElement.hidden = !0)), statusElement.innerHTML = e)
+                    }
+                },
+                totalDependencies: 0,
+                monitorRunDependencies: function (e) {
+                    this.totalDependencies = Math.max(this.totalDependencies, e), Module.setStatus(e ? "Preparing... (" + (this.totalDependencies - e) + "/" + this.totalDependencies + ")" : "All downloads complete.")
+                }
+            };
+        Module.setStatus("LOADING WEBASM..."), window.onerror = function () {
+            Module.setStatus("Exception thrown, see JavaScript console"), spinnerElement.style.display = "none", Module.setStatus = function (e) {
+                e && Module.printErr("[post-exception status] " + e)
+            }
         }
-      };
-    Module.setStatus("LOADING WEBASM..."), window.onerror = function() {
-      Module.setStatus("Exception thrown, see JavaScript console"), spinnerElement.style.display = "none", Module.setStatus = function(e) {
-        e && Module.printErr("[post-exception status] " + e)
-      }
-    }
-  </script>
-  <script src=custom_script.js></script>
-  <script src=project.js async></script>
+    </script>
+    <script src=custom_script.js></script>
+    <script src=project.js async></script>
 </body>
 
 </html>
